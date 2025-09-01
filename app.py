@@ -6,10 +6,22 @@ from flask import Flask, request, render_template
 app = Flask(__name__, template_folder='templates')
 
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/login', methods=['GET','POST'])
 def index():
     if request.method == 'GET':  # When a GET request is sent, Flask renders the index.html file in templates
         return render_template('index.html') #if it is a get method, startup the form
+    elif request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        if my_database.verify_user(username,password):
+            return f"Welcome {username} !"
+        else: 
+            return f"Invalid username or password", 401
+
+@app.route('/regi', methods=['GET','POST'])
+def register():
+    if request.method == 'GET':  # When a GET request is sent, Flask renders the index.html file in templates
+        return render_template('register.html') #if it is a get method, startup the form
     elif request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
