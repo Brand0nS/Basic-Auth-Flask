@@ -4,17 +4,35 @@
 <meta charset="UTF-8">
 <title> Login Page </title>
 </head>
+<body>    
+
+
+
 <h1> Please Login Here: </h1>
 <form method="POST" action="{{ url_for('index') }}">
   <input type="text" name="username" placeholder="Username"><br>
   <input type="password" name="password" placeholder="Password"><br>
   <input type="submit" value="Login">
-  </form>
+ 
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      {% if category == "success" %}
+        <p style="color:green;">{{ message }}</p>
+      {% elif category == "error" %}
+        <p style="color:red;">{{ message }}</p>
+      {% else %}
+        <p>{{ message }}</p>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
 <p><a href="{{ url_for('register') }}"> Register here! </a></p>
 </form>
 
-
+</body>
 
 
 
